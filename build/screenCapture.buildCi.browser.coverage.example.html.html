@@ -1,6 +1,4 @@
-<!doctype html>
-<html lang="en">
-<head>
+<html lang="en"><head>
     <title>Code coverage report for node-npmtest-mysql/mysql/index.js</title>
     <meta charset="utf-8">
     <style>
@@ -210,11 +208,11 @@
         
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
-    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">node-npmtest-mysql/mysql/</a> &#187; index.js</div>
+    <div class="path"><a href="../../index.html">All files</a> » <a href="index.html">node-npmtest-mysql/mysql/</a> » index.js</div>
 </div>
 <div class="body">
 <pre><table class="coverage">
-<tr><td class="line-count">1
+<tbody><tr><td class="line-count">1
 2
 3
 4
@@ -522,11 +520,11 @@
  * @return {Connection} A new MySQL connection
  * @public
  */
-exports.createConnection = <span class="fstat-no" title="function not covered" >function createConnection(config) {</span>
-<span class="cstat-no" title="statement not covered" >  var Connection       = loadClass('Connection');</span>
-<span class="cstat-no" title="statement not covered" >  var ConnectionConfig = loadClass('ConnectionConfig');</span>
+exports.createConnection = <span class="fstat-no" title="function not covered">function createConnection(config) {</span>
+<span class="cstat-no" title="statement not covered">  var Connection       = loadClass('Connection');</span>
+<span class="cstat-no" title="statement not covered">  var ConnectionConfig = loadClass('ConnectionConfig');</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return new Connection({config: new ConnectionConfig(config)});</span>
+<span class="cstat-no" title="statement not covered">  return new Connection({config: new ConnectionConfig(config)});</span>
 };
 &nbsp;
 /**
@@ -535,11 +533,11 @@ exports.createConnection = <span class="fstat-no" title="function not covered" >
  * @return {Pool} A new MySQL pool
  * @public
  */
-exports.createPool = <span class="fstat-no" title="function not covered" >function createPool(config) {</span>
-<span class="cstat-no" title="statement not covered" >  var Pool       = loadClass('Pool');</span>
-<span class="cstat-no" title="statement not covered" >  var PoolConfig = loadClass('PoolConfig');</span>
+exports.createPool = <span class="fstat-no" title="function not covered">function createPool(config) {</span>
+<span class="cstat-no" title="statement not covered">  var Pool       = loadClass('Pool');</span>
+<span class="cstat-no" title="statement not covered">  var PoolConfig = loadClass('PoolConfig');</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return new Pool({config: new PoolConfig(config)});</span>
+<span class="cstat-no" title="statement not covered">  return new Pool({config: new PoolConfig(config)});</span>
 };
 &nbsp;
 /**
@@ -548,10 +546,10 @@ exports.createPool = <span class="fstat-no" title="function not covered" >functi
  * @return {PoolCluster} New MySQL pool cluster
  * @public
  */
-exports.createPoolCluster = <span class="fstat-no" title="function not covered" >function createPoolCluster(config) {</span>
-<span class="cstat-no" title="statement not covered" >  var PoolCluster = loadClass('PoolCluster');</span>
+exports.createPoolCluster = <span class="fstat-no" title="function not covered">function createPoolCluster(config) {</span>
+<span class="cstat-no" title="statement not covered">  var PoolCluster = loadClass('PoolCluster');</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return new PoolCluster(config);</span>
+<span class="cstat-no" title="statement not covered">  return new PoolCluster(config);</span>
 };
 &nbsp;
 /**
@@ -562,10 +560,10 @@ exports.createPoolCluster = <span class="fstat-no" title="function not covered" 
  * @return {Query} New query object
  * @public
  */
-exports.createQuery = <span class="fstat-no" title="function not covered" >function createQuery(sql, values, callback) {</span>
-<span class="cstat-no" title="statement not covered" >  var Connection = loadClass('Connection');</span>
+exports.createQuery = <span class="fstat-no" title="function not covered">function createQuery(sql, values, callback) {</span>
+<span class="cstat-no" title="statement not covered">  var Connection = loadClass('Connection');</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return Connection.createQuery(sql, values, callback);</span>
+<span class="cstat-no" title="statement not covered">  return Connection.createQuery(sql, values, callback);</span>
 };
 &nbsp;
 /**
@@ -576,10 +574,10 @@ exports.createQuery = <span class="fstat-no" title="function not covered" >funct
  * @return {string} Escaped string value
  * @public
  */
-exports.escape = <span class="fstat-no" title="function not covered" >function escape(value, stringifyObjects, timeZone) {</span>
-<span class="cstat-no" title="statement not covered" >  var SqlString = loadClass('SqlString');</span>
+exports.escape = <span class="fstat-no" title="function not covered">function escape(value, stringifyObjects, timeZone) {</span>
+<span class="cstat-no" title="statement not covered">  var SqlString = loadClass('SqlString');</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return SqlString.escape(value, stringifyObjects, timeZone);</span>
+<span class="cstat-no" title="statement not covered">  return SqlString.escape(value, stringifyObjects, timeZone);</span>
 };
 &nbsp;
 /**
@@ -589,10 +587,10 @@ exports.escape = <span class="fstat-no" title="function not covered" >function e
  * @return {string} Escaped string value
  * @public
  */
-exports.escapeId = <span class="fstat-no" title="function not covered" >function escapeId(value, forbidQualified) {</span>
-<span class="cstat-no" title="statement not covered" >  var SqlString = loadClass('SqlString');</span>
+exports.escapeId = <span class="fstat-no" title="function not covered">function escapeId(value, forbidQualified) {</span>
+<span class="cstat-no" title="statement not covered">  var SqlString = loadClass('SqlString');</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return SqlString.escapeId(value, forbidQualified);</span>
+<span class="cstat-no" title="statement not covered">  return SqlString.escapeId(value, forbidQualified);</span>
 };
 &nbsp;
 /**
@@ -604,10 +602,10 @@ exports.escapeId = <span class="fstat-no" title="function not covered" >function
  * @return {string} Formatted SQL string
  * @public
  */
-exports.format = <span class="fstat-no" title="function not covered" >function format(sql, values, stringifyObjects, timeZone) {</span>
-<span class="cstat-no" title="statement not covered" >  var SqlString = loadClass('SqlString');</span>
+exports.format = <span class="fstat-no" title="function not covered">function format(sql, values, stringifyObjects, timeZone) {</span>
+<span class="cstat-no" title="statement not covered">  var SqlString = loadClass('SqlString');</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return SqlString.format(sql, values, stringifyObjects, timeZone);</span>
+<span class="cstat-no" title="statement not covered">  return SqlString.format(sql, values, stringifyObjects, timeZone);</span>
 };
 &nbsp;
 /**
@@ -624,51 +622,52 @@ Object.defineProperty(exports, 'Types', {
  * @return {function|object} Class constructor or exports
  * @private
  */
-<span class="fstat-no" title="function not covered" >function loadClass(className) {</span>
-<span class="cstat-no" title="statement not covered" >  var Class = Classes[className];</span>
+<span class="fstat-no" title="function not covered">function loadClass(className) {</span>
+<span class="cstat-no" title="statement not covered">  var Class = Classes[className];</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (Class !== undefined) {</span>
-<span class="cstat-no" title="statement not covered" >    return Class;</span>
+<span class="cstat-no" title="statement not covered">  if (Class !== undefined) {</span>
+<span class="cstat-no" title="statement not covered">    return Class;</span>
   }
 &nbsp;
   // This uses a switch for static require analysis
-<span class="cstat-no" title="statement not covered" >  switch (className) {</span>
+<span class="cstat-no" title="statement not covered">  switch (className) {</span>
     case 'Connection':
-<span class="cstat-no" title="statement not covered" >      Class = require('./lib/Connection');</span>
-<span class="cstat-no" title="statement not covered" >      break;</span>
+<span class="cstat-no" title="statement not covered">      Class = require('./lib/Connection');</span>
+<span class="cstat-no" title="statement not covered">      break;</span>
     case 'ConnectionConfig':
-<span class="cstat-no" title="statement not covered" >      Class = require('./lib/ConnectionConfig');</span>
-<span class="cstat-no" title="statement not covered" >      break;</span>
+<span class="cstat-no" title="statement not covered">      Class = require('./lib/ConnectionConfig');</span>
+<span class="cstat-no" title="statement not covered">      break;</span>
     case 'Pool':
-<span class="cstat-no" title="statement not covered" >      Class = require('./lib/Pool');</span>
-<span class="cstat-no" title="statement not covered" >      break;</span>
+<span class="cstat-no" title="statement not covered">      Class = require('./lib/Pool');</span>
+<span class="cstat-no" title="statement not covered">      break;</span>
     case 'PoolCluster':
-<span class="cstat-no" title="statement not covered" >      Class = require('./lib/PoolCluster');</span>
-<span class="cstat-no" title="statement not covered" >      break;</span>
+<span class="cstat-no" title="statement not covered">      Class = require('./lib/PoolCluster');</span>
+<span class="cstat-no" title="statement not covered">      break;</span>
     case 'PoolConfig':
-<span class="cstat-no" title="statement not covered" >      Class = require('./lib/PoolConfig');</span>
-<span class="cstat-no" title="statement not covered" >      break;</span>
+<span class="cstat-no" title="statement not covered">      Class = require('./lib/PoolConfig');</span>
+<span class="cstat-no" title="statement not covered">      break;</span>
     case 'SqlString':
-<span class="cstat-no" title="statement not covered" >      Class = require('./lib/protocol/SqlString');</span>
-<span class="cstat-no" title="statement not covered" >      break;</span>
+<span class="cstat-no" title="statement not covered">      Class = require('./lib/protocol/SqlString');</span>
+<span class="cstat-no" title="statement not covered">      break;</span>
     case 'Types':
-<span class="cstat-no" title="statement not covered" >      Class = require('./lib/protocol/constants/types');</span>
-<span class="cstat-no" title="statement not covered" >      break;</span>
+<span class="cstat-no" title="statement not covered">      Class = require('./lib/protocol/constants/types');</span>
+<span class="cstat-no" title="statement not covered">      break;</span>
     default:
-<span class="cstat-no" title="statement not covered" >      throw new Error('Cannot find class \'' + className + '\'');</span>
+<span class="cstat-no" title="statement not covered">      throw new Error('Cannot find class \'' + className + '\'');</span>
   }
 &nbsp;
   // Store to prevent invoking require()
-<span class="cstat-no" title="statement not covered" >  Classes[className] = Class;</span>
+<span class="cstat-no" title="statement not covered">  Classes[className] = Class;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return Class;</span>
+<span class="cstat-no" title="statement not covered">  return Class;</span>
 }
 &nbsp;
 &nbsp;</pre></td></tr>
-</table></pre>
+</tbody></table></pre>
 </div>
 <div class="footer">
     <div class="meta">Generated by <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a> at Sat Apr 15 2017 21:31:09 GMT+0000 (UTC)</div>
 </div>
-</body>
-</html>
+
+
+</body></html>
