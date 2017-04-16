@@ -503,6 +503,9 @@ local.templateApidocMd = '\
              * this function will create the apidoc-element in the given module
              */
                 var element;
+                if (options.modeNoRender) {
+                    return element;
+                }
                 element = {};
                 element.moduleName = prefix.split('.');
                 // handle case where module is a function
@@ -626,13 +629,6 @@ local.templateApidocMd = '\
                     options.env['npm_package_' + key] = tmp;
                 }
             });
-            if (options.modeRenderFast) {
-                // render apidoc
-                options.result = local.templateRender(options.template, options)
-                    .trim()
-                    .replace((/ +$/gm), '') + '\n';
-                return options.result;
-            }
             local.objectSetDefault(options, {
                 blacklistDict: { global: global },
                 circularList: [global],
@@ -1060,6 +1056,22 @@ local.templateApidocMd = '\
                 : element, replacer, space);
         };
 
+        local.listShuffle = function (list) {
+        /*
+         * https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+         * this function will inplace shuffle the list, via fisher-yates algorithm
+         */
+            var ii, random, swap;
+            for (ii = list.length - 1; ii > 0; ii -= 1) {
+                // coerce to finite integer
+                random = (Math.random() * (ii + 1)) | 0;
+                swap = list[ii];
+                list[ii] = list[random];
+                list[random] = swap;
+            }
+            return list;
+        };
+
         local.nop = function () {
         /*
          * this function will do nothing
@@ -1192,7 +1204,7 @@ local.templateApidocMd = '\
 
         local.setTimeoutOnError = function (onError, error, data) {
         /*
-         * this function will asynchronously call onError
+         * this function will async-call onError
          */
             if (typeof onError === 'function') {
                 setTimeout(function () {
@@ -1546,7 +1558,13 @@ local.templateApidocMd = '\
             }
         };
 
-        local._DbTable.prototype._crudGetManyByQuery = function (query, sort, skip, limit) {
+        local._DbTable.prototype._crudGetManyByQuery = function (
+            query,
+            sort,
+            skip,
+            limit,
+            shuffle
+        ) {
         /*
          * this function will get the dbRow's in the dbTable,
          * with the given query, sort, skip, and limit
@@ -1586,6 +1604,8 @@ local.templateApidocMd = '\
             });
             // skip and limit
             result = result.slice(skip || 0, (skip || 0) + (limit || Infinity));
+            // shuffle
+            ((shuffle && local.listShuffle) || local.nop)(result);
             return result;
         };
 
@@ -1768,7 +1788,8 @@ local.templateApidocMd = '\
                     options.query,
                     options.sort || this.sortDefault,
                     options.skip,
-                    options.limit
+                    options.limit,
+                    options.shuffle
                 ),
                 options.fieldList
             ));
@@ -5592,8 +5613,10 @@ local.templateCoverageBadgeSvg =
                 local._moduleExtensionsJs = local.module._extensions['.js'];
                 local.module._extensions['.js'] = function (module, file) {
                     if (typeof file === 'string' &&
-                            file.indexOf(process.cwd()) === 0 &&
-                            file.indexOf(process.cwd() + '/node_modules/') !== 0) {
+                            (file.indexOf(process.env.npm_config_mode_coverage_dir) === 0 || (
+                                file.indexOf(process.cwd()) === 0 &&
+                                file.indexOf(process.cwd() + '/node_modules/') !== 0
+                            ))) {
                         module._compile(local.instrumentInPackage(
                             local._fs.readFileSync(file, 'utf8'),
                             file
@@ -9976,7 +9999,7 @@ the greatest app in the world!\n\
 #### apidoc\n\
 - [https://kaizhu256.github.io/node-jslint-lite/build..beta..travis-ci.org/apidoc.html](https://kaizhu256.github.io/node-jslint-lite/build..beta..travis-ci.org/apidoc.html)\n\
 \n\
-[![apidoc](https://kaizhu256.github.io/node-jslint-lite/build/screenCapture.buildCi.browser.apidoc.html.png)](https://kaizhu256.github.io/node-jslint-lite/build..beta..travis-ci.org/apidoc.html)\n\
+[![apidoc](https://kaizhu256.github.io/node-jslint-lite/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://kaizhu256.github.io/node-jslint-lite/build..beta..travis-ci.org/apidoc.html)\n\
 \n\
 #### todo\n\
 - none\n\
@@ -10122,7 +10145,7 @@ local.assetsDict['/assets.readmeCustomOrg.npmdoc.template.md'] = '\
 [![NPM](https://nodei.co/npm/{{env.npm_package_name}}.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/{{env.npm_package_name}}) \
 \n\
 \n\
-[![apidoc](https://npmdoc.github.io/node-npmdoc-{{env.npm_package_name}}/build/screenCapture.buildCi.browser.apidoc.html.png)](https://npmdoc.github.io/node-npmdoc-{{env.npm_package_name}}/build/apidoc.html) \
+[![apidoc](https://npmdoc.github.io/node-npmdoc-{{env.npm_package_name}}/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-{{env.npm_package_name}}/build/apidoc.html) \
 \n\
 \n\
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-{{env.npm_package_name}}/build/screenCapture.npmPackageListing.svg) \
@@ -10173,13 +10196,13 @@ local.assetsDict['/assets.readmeCustomOrg.npmtest.template.md'] = '\
 | build-artifacts : | [![build-artifacts](https://npmtest.github.io/node-npmtest-{{env.npm_package_name}}/glyphicons_144_folder_open.png)](https://github.com/npmtest/node-npmtest-{{env.npm_package_name}}/tree/gh-pages/build)| \
 \n\
 \n\
-[![istanbul-coverage](https://npmtest.github.io/node-npmtest-{{env.npm_package_name}}/build/screenCapture.buildCi.browser.coverage.example.html.png)](https://npmtest.github.io/node-npmtest-{{env.npm_package_name}}/build/coverage.html/index.html) \
+[![istanbul-coverage](https://npmtest.github.io/node-npmtest-{{env.npm_package_name}}/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fcoverage.lib.html.png)](https://npmtest.github.io/node-npmtest-{{env.npm_package_name}}/build/coverage.html/index.html) \
 \n\
 \n\
-[![test-report](https://npmtest.github.io/node-npmtest-{{env.npm_package_name}}/build/screenCapture.buildCi.browser.test-report.html.png)](https://npmtest.github.io/node-npmtest-{{env.npm_package_name}}/build/test-report.html) \
+[![test-report](https://npmtest.github.io/node-npmtest-{{env.npm_package_name}}/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Ftest-report.html.png)](https://npmtest.github.io/node-npmtest-{{env.npm_package_name}}/build/test-report.html) \
 \n\
 \n\
-[![apidoc](https://npmdoc.github.io/node-npmdoc-{{env.npm_package_name}}/build/screenCapture.buildCi.browser.apidoc.html.png)](https://npmdoc.github.io/node-npmdoc-{{env.npm_package_name}}/build/apidoc.html) \
+[![apidoc](https://npmdoc.github.io/node-npmdoc-{{env.npm_package_name}}/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-{{env.npm_package_name}}/build/apidoc.html) \
 \n\
 \n\
 ![npmPackageListing](https://npmtest.github.io/node-npmtest-{{env.npm_package_name}}/build/screenCapture.npmPackageListing.svg) \
@@ -11603,6 +11626,9 @@ local.assetsDict['/favicon.ico'] = '';
                     }
                     options.urlParsed = local.urlParse(options.url);
                     options.testName = options.urlParsed.pathname;
+                    if (options.testName.indexOf(process.cwd()) === 0) {
+                        options.testName = options.testName.replace(process.cwd(), '');
+                    }
                     if (local.env.npm_config_modeBrowserTestHostInclude) {
                         options.testName = options.urlParsed.host + options.testName;
                     }
@@ -12163,7 +12189,7 @@ return Utf8ArrayToStr(bff);
                 // build README.md
                 options.readme = local.apidocCreate({
                     dir: local.env.npm_package_buildCustomOrg,
-                    modeRenderFast: true,
+                    modeNoRender: true,
                     modulePathList: options.modulePathList,
                     template: local.assetsDict['/assets.readmeCustomOrg.npmtest.template.md']
                 });
@@ -12509,6 +12535,7 @@ return Utf8ArrayToStr(bff);
                     }, options.onNext);
                     break;
                 case 4:
+                    self.crudRemoveManyByQuery({});
                     self.crudSetManyById(dbRowList
                         .filter(function (dbRow) {
                             return dbRow.private === false && dbRow.slug.indexOf(
@@ -12523,7 +12550,8 @@ return Utf8ArrayToStr(bff);
                                 buildFinishedAt: data.finished_at,
                                 buildState: data.state
                             };
-                        }), options.onNext);
+                        }));
+                    self.save(options.onNext);
                     break;
                 default:
                     local.setTimeoutOnError(onError, error, self);
@@ -14892,10 +14920,12 @@ instruction\n\
                 exit = process.exit;
                 process.exit = local.nop;
                 /* istanbul ignore next */
-                if (local.env.npm_package_buildCustomOrg &&
-                        local.fs.existsSync(local.env.npm_package_buildCustomOrg)) {
-                    local.exportsCustomOrg =
-                        require(process.cwd() + '/' + local.env.npm_package_buildCustomOrg);
+                if (local.env.npm_package_buildCustomOrg) {
+                    local.exportsCustomOrg = {};
+                    local.tryCatchOnError(function () {
+                        local.exportsCustomOrg = require(process.cwd() + '/node_modules/' +
+                            local.env.npm_package_buildCustomOrg);
+                    }, local.onErrorDefault);
                 }
                 break;
             }
@@ -15526,6 +15556,18 @@ instruction\n\
             return;
         case 'browserTest':
             local.browserTest({}, local.exit);
+            return;
+        case 'browserTestList':
+            local.onParallelList({
+                list: process.argv[3].split(/\s+/).filter(function (element) {
+                    return element;
+                })
+            }, function (options, onParallel) {
+                onParallel.counter += 1;
+                local.browserTest({ url: options.element }, function () {
+                    onParallel();
+                });
+            }, local.exit);
             return;
         case 'dbTableTravisOrgCrudGetManyByQuery':
             local.dbTableTravisOrgCreate(JSON.parse(process.argv[3]), function (error, data) {
